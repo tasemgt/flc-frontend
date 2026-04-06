@@ -3,10 +3,12 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/authStore'
 import axiosClient from '../../api/axiosClient'
 
+
 const Logo = () => (
   <NavLink to="/" className="sidebar-logo">
-    <span className="material-icons" style={{ color: '#fff', fontSize: 28 }}>self_improvement</span>
-    <span className="sidebar-logo-text">FREELOTCARE</span>
+    {/* <span className="material-icons" style={{ color: '#fff', fontSize: 28 }}>self_improvement</span> */}
+    <img style={{width: '2rem'}} src="../../imgs/favicon.png" alt="FreeLotCare Logo" />
+    <span className="sidebar-logo-text">FreeLotCare</span>
   </NavLink>
 )
 
