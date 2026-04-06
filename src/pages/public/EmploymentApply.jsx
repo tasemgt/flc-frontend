@@ -60,7 +60,11 @@ export default function EmploymentApply() {
     return (
       <div className="page-header" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80')" }}>
         <nav className="intro-nav">
-          <Link to="/" className="intro-nav-logo"><span className="material-icons">self_improvement</span>FREELOTCARE</Link>
+          <Link to="/" className="intro-nav-logo">
+          {/* <span className="material-icons">self_improvement</span> */}
+          <img style={{width: '2.5rem'}} src="../../imgs/favicon.png" alt="FreeLotCare Logo" />
+          FreeLotCare
+          </Link>
           <Link to="/login" className="intro-nav-link"><span className="material-icons" style={{ fontSize: 18 }}>login</span>Login</Link>
         </nav>
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
@@ -84,7 +88,11 @@ export default function EmploymentApply() {
   return (
     <div className="page-header" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80')" }}>
       <nav className="intro-nav">
-        <Link to="/" className="intro-nav-logo"><span className="material-icons">self_improvement</span>FREELOTCARE</Link>
+        <Link to="/" className="intro-nav-logo">
+          {/* <span className="material-icons">self_improvement</span> */}
+          <img style={{width: '2.5rem'}} src="../../imgs/favicon.png" alt="FreeLotCare Logo" />
+          FreeLotCare
+        </Link>
         <Link to="/login" className="intro-nav-link"><span className="material-icons" style={{ fontSize: 18 }}>login</span>Login</Link>
       </nav>
 

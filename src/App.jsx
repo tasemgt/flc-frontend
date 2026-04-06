@@ -58,6 +58,17 @@ import {
 import PrnMedicationForm from './pages/shared/forms/PrnMedicationForm'
 import ConsentMedicalInfoForm from './pages/shared/forms/ConsentMedicalInfoForm'
 import FormDetail from './pages/shared/forms/FormDetail'
+import NurseFormsList from './pages/shared/forms/NurseFormsList'
+import DirectorFormsList from './pages/director/forms/DirectorFormsList'
+import {
+  NursingServiceDeliveryForm, NursingServiceChecklistForm, RnDelegationChecklistForm,
+  NursingTasksScreeningForm, ExclusionHhccForm, ComprehensiveNursingAssessmentForm,
+} from './pages/shared/forms/NurseForms'
+import {
+  ConsumerSatisfactionForm, CriticalIncidentForm, ExclusionScheduleForm,
+  DebarVendorForm, DentalSummarySheetForm, MinorAdaptiveSummaryForm,
+  NoticeAdvisoryCommitteeForm,
+} from './pages/director/forms/DirectorForms'
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 30000 } } })
 
@@ -132,6 +143,21 @@ export default function App() {
             <Route path="forms/consumer/prn-medication" element={<PrnMedicationForm />} />
             <Route path="forms/consumer/consent-medical" element={<ConsentMedicalInfoForm />} />
             <Route path="forms/view/:formId" element={<FormDetail />} />
+            <Route path="forms/nurse" element={<NurseFormsList />} />
+            <Route path="forms/nurse/nursing-delivery" element={<NursingServiceDeliveryForm />} />
+            <Route path="forms/nurse/nursing-checklist" element={<NursingServiceChecklistForm />} />
+            <Route path="forms/nurse/rn-delegation" element={<RnDelegationChecklistForm />} />
+            <Route path="forms/nurse/tasks-screening" element={<NursingTasksScreeningForm />} />
+            <Route path="forms/nurse/comprehensive-assessment" element={<ComprehensiveNursingAssessmentForm />} />
+            <Route path="forms/nurse/exclusion-hhcc" element={<ExclusionHhccForm />} />
+            <Route path="forms/director" element={<DirectorFormsList />} />
+            <Route path="forms/director/satisfaction" element={<ConsumerSatisfactionForm />} />
+            <Route path="forms/director/critical-incident" element={<CriticalIncidentForm />} />
+            <Route path="forms/director/exclusion-schedule" element={<ExclusionScheduleForm />} />
+            <Route path="forms/director/debar-vendor" element={<DebarVendorForm />} />
+            <Route path="forms/director/dental-summary" element={<DentalSummarySheetForm />} />
+            <Route path="forms/director/minor-adaptive" element={<MinorAdaptiveSummaryForm />} />
+            <Route path="forms/director/notice-advisory" element={<NoticeAdvisoryCommitteeForm />} />
             <Route path="profile" element={<Profile />} />
             <Route path="staff" element={<MyStaff />} />
             <Route path="staff/:id" element={<StaffDetail />} />
@@ -161,6 +187,12 @@ export default function App() {
             <Route path="forms/consumer/day-habilitation" element={<DayHabilitationPage />} />
             <Route path="forms/consumer/prn-medication" element={<PrnMedicationForm />} />
             <Route path="forms/consumer/consent-medical" element={<ConsentMedicalInfoForm />} />
+            <Route path="forms/nurse" element={<NurseFormsList />} />
+            <Route path="forms/nurse/nursing-delivery" element={<NursingServiceDeliveryForm />} />
+            <Route path="forms/nurse/rn-delegation" element={<RnDelegationChecklistForm />} />
+            <Route path="forms/nurse/tasks-screening" element={<NursingTasksScreeningForm />} />
+            <Route path="forms/nurse/comprehensive-assessment" element={<ComprehensiveNursingAssessmentForm />} />
+            <Route path="forms/nurse/exclusion-hhcc" element={<ExclusionHhccForm />} />
             <Route path="forms/view/:formId" element={<FormDetail />} />
             <Route path="profile" element={<Profile />} />
           </Route>

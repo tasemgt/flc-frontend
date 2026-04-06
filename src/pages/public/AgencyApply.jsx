@@ -27,8 +27,9 @@ export default function AgencyApply() {
     >
       <nav className="intro-nav">
         <Link to="/" className="intro-nav-logo">
-          <span className="material-icons">self_improvement</span>
-          FREELOTCARE
+          {/* <span className="material-icons">self_improvement</span> */}
+          <img style={{width: '2.5rem'}} src="../../imgs/favicon.png" alt="FreeLotCare Logo" />
+          FreeLotCare
         </Link>
         <Link to="/login" className="intro-nav-link">
           <span className="material-icons" style={{ fontSize: 18 }}>login</span>

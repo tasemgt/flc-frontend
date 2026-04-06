@@ -26,27 +26,32 @@ const CONSUMER_FORMS = [
 ]
 
 const NURSE_FORMS_DIRECTOR = [
-  { label: 'Nursing Services Delivery Log', to: '/director/forms/nurse/delivery' },
-  { label: 'Nursing Services Checklist', to: '/director/forms/nurse/checklist' },
+  { label: 'Nursing Services Delivery Log', to: '/director/forms/nurse/nursing-delivery' },
+  { label: 'Nursing Services Checklist', to: '/director/forms/nurse/nursing-checklist' },
   { label: 'RN Delegation Checklist', to: '/director/forms/nurse/rn-delegation' },
   { label: 'Nursing Tasks Screening Tool', to: '/director/forms/nurse/tasks-screening' },
-  { label: 'Comprehensive Nursing Assessment', to: '/director/forms/nurse/assessment' },
+  { label: 'Comprehensive Nursing Assessment', to: '/director/forms/nurse/comprehensive-assessment' },
   null,
-  { label: 'Exclusion of HH/CC Provider', to: '/director/forms/nurse/exclusion' },
+  { label: 'Exclusion of HH/CC Provider', to: '/director/forms/nurse/exclusion-hhcc' },
 ]
 
 const NURSE_FORMS_STAFF = [
-  { label: 'Exclusion of HH/CC Provider', to: '/staff/forms/nurse/exclusion' },
+  { label: 'Nursing Services Delivery Log', to: '/staff/forms/nurse/nursing-delivery' },
+  { label: 'RN Delegation Checklist', to: '/staff/forms/nurse/rn-delegation' },
+  { label: 'Nursing Tasks Screening Tool', to: '/staff/forms/nurse/tasks-screening' },
+  { label: 'Comprehensive Nursing Assessment', to: '/staff/forms/nurse/comprehensive-assessment' },
+  null,
+  { label: 'Exclusion of HH/CC Provider', to: '/staff/forms/nurse/exclusion-hhcc' },
 ]
 
 const DIRECTOR_FORMS = [
-  { label: 'Exclusion Information / Schedules', to: '/director/forms/director/exclusion' },
-  { label: 'Debar Vendor List / Schedules', to: '/director/forms/director/debar' },
+  { label: 'Exclusion Information / Schedules', to: '/director/forms/director/exclusion-schedule' },
+  { label: 'Debar Vendor List / Schedules', to: '/director/forms/director/debar-vendor' },
   { label: 'Critical Incident Report Schedule', to: '/director/forms/director/critical-incident' },
-  { label: 'Consumer Satisfaction Review', to: '/director/forms/director/consumer-satisfaction' },
-  { label: 'Notice For Advisory Committee', to: '/director/forms/director/notice-advisory' },
+  { label: 'Consumer Satisfaction Quarterly Review', to: '/director/forms/director/satisfaction' },
+  { label: 'Notice For Advisory Committee Meeting', to: '/director/forms/director/notice-advisory' },
   { label: 'Dental Summary Sheet', to: '/director/forms/director/dental-summary' },
-  { label: 'Minor Home Modification Summary', to: '/director/forms/director/minor-adaptive' },
+  { label: 'Minor Home Modification/Adaptive Aids Summary Sheet', to: '/director/forms/director/minor-adaptive' },
 ]
 
 function Dropdown({ label, items }) {
