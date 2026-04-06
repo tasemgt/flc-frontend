@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "https://flc-backend-ujam.onrender.com/api/v1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
