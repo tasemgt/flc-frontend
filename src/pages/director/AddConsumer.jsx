@@ -13,39 +13,70 @@ const DOC_FIELDS = [
   { key: 'transferPaper', label: 'Transfer Paper', hasExpiry: false },
 ]
 
-function DocUploadRow({ docKey, label, hasExpiry, onFileChange, onExpiryChange, fileName, expiry }) {
+const IMAGE_MIMETYPES = ['image/jpeg', 'image/jpg', 'image/png']
+const MAX_IMAGE_MB = 2
+const MAX_DOC_MB = 5
+
+function DocUploadRow({ label, hasExpiry, onFileChange, onExpiryChange, fileName, expiry }) {
   const inputRef = useRef()
+  const [sizeError, setSizeError] = useState('')
+
+  const handleChange = (e) => {
+    const file = e.target.files[0]
+    setSizeError('')
+    if (file) {
+      const limitMB = IMAGE_MIMETYPES.includes(file.type) ? MAX_IMAGE_MB : MAX_DOC_MB
+      if (file.size > limitMB * 1024 * 1024) {
+        setSizeError(`File too large — max ${limitMB} MB for this file type.`)
+        e.target.value = ''
+        return
+      }
+    }
+    onFileChange(e)
+  }
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid #f5f5f5', flexWrap: 'wrap' }}>
-      <div style={{ flex: 1, minWidth: 200 }}>
-        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 6 }}>{label}</div>
-        <label
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', border: '1px dashed #ccc', borderRadius: 4, cursor: 'pointer', fontSize: 13, color: '#777' }}
-          onClick={() => inputRef.current?.click()}
-        >
-          <span className="material-icons" style={{ fontSize: 16 }}>upload_file</span>
-          {fileName || 'Choose PDF…'}
-        </label>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="application/pdf"
-          style={{ display: 'none' }}
-          onChange={onFileChange}
-        />
-      </div>
-      {hasExpiry && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 12, color: '#aaa', whiteSpace: 'nowrap' }}>Expiry date:</span>
+    <div style={{ padding: '10px 0', borderBottom: '1px solid #f5f5f5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div style={{ fontSize: 12, color: '#aaa', marginBottom: 6 }}>{label}</div>
+          <label
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', border: '1px dashed #ccc', borderRadius: 4, cursor: 'pointer', fontSize: 13, color: '#777' }}
+            onClick={() => inputRef.current?.click()}
+          >
+            <span className="material-icons" style={{ fontSize: 16 }}>upload_file</span>
+            {fileName || 'Choose file…'}
+          </label>
           <input
-            type="date"
-            value={expiry || ''}
-            onChange={onExpiryChange}
-            className="form-control-box"
-            style={{ maxWidth: 160, padding: '6px 10px', fontSize: 13 }}
+            ref={inputRef}
+            type="file"
+            accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
+            style={{ display: 'none' }}
+            onChange={handleChange}
           />
+          <div style={{ fontSize: 11, color: '#bbb', marginTop: 4 }}>
+            PDF, Word (.doc, .docx), JPG, PNG &nbsp;·&nbsp; Documents max {MAX_DOC_MB} MB &nbsp;·&nbsp; Images max {MAX_IMAGE_MB} MB
+          </div>
+          {sizeError && (
+            <div style={{ fontSize: 11, color: '#e53935', marginTop: 3, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <span className="material-icons" style={{ fontSize: 13 }}>error_outline</span>
+              {sizeError}
+            </div>
+          )}
         </div>
-      )}
+        {hasExpiry && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 12, color: '#aaa', whiteSpace: 'nowrap' }}>Expiry date:</span>
+            <input
+              type="date"
+              value={expiry || ''}
+              onChange={onExpiryChange}
+              className="form-control-box"
+              style={{ maxWidth: 160, padding: '6px 10px', fontSize: 13 }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

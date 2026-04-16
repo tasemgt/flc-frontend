@@ -236,7 +236,7 @@ export default function EmploymentApply() {
                     <FileUpload
                       label="Government ID (e.g. Driver's License)"
                       name="idCard"
-                      accept="application/pdf,image/*"
+                      accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
                       required
                       showExpiry
                       expiryName="idCard_expiry"
@@ -252,7 +252,7 @@ export default function EmploymentApply() {
                     <FileUpload
                       label="Social Security Card"
                       name="ssCard"
-                      accept="application/pdf,image/*"
+                      accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
                       required
                       onChange={(e) => { filesRef.current.ssCard = e.target.files[0] }}
                     />
@@ -261,7 +261,7 @@ export default function EmploymentApply() {
                     <FileUpload
                       label="High School Certificate"
                       name="highSchoolCert"
-                      accept="application/pdf,image/*"
+                      accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
                       required
                       onChange={(e) => { filesRef.current.highSchoolCert = e.target.files[0] }}
                     />
@@ -270,7 +270,7 @@ export default function EmploymentApply() {
                     <FileUpload
                       label="Auto Insurance"
                       name="autoInsurance"
-                      accept="application/pdf,image/*"
+                      accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
                       onChange={(e) => { filesRef.current.autoInsurance = e.target.files[0] }}
                     />
                   </div>

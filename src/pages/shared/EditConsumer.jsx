@@ -15,49 +15,79 @@ const DOC_FIELDS = [
   { key: 'transferPaper', label: 'Transfer Paper', hasExpiry: false },
 ]
 
-function DocUploadRow({ docKey, label, hasExpiry, existing, onFileChange, onExpiryChange, newFileName, expiry }) {
+const IMAGE_MIMETYPES = ['image/jpeg', 'image/jpg', 'image/png']
+const MAX_IMAGE_MB = 2
+const MAX_DOC_MB = 5
+
+function DocUploadRow({ label, hasExpiry, existing, onFileChange, onExpiryChange, newFileName, expiry }) {
   const inputRef = useRef()
   const hasExisting = !!existing?.filename
+  const [sizeError, setSizeError] = useState('')
+
+  const handleChange = (e) => {
+    const file = e.target.files[0]
+    setSizeError('')
+    if (file) {
+      const limitMB = IMAGE_MIMETYPES.includes(file.type) ? MAX_IMAGE_MB : MAX_DOC_MB
+      if (file.size > limitMB * 1024 * 1024) {
+        setSizeError(`File too large — max ${limitMB} MB for this file type.`)
+        e.target.value = ''
+        return
+      }
+    }
+    onFileChange(e)
+  }
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid #f5f5f5', flexWrap: 'wrap' }}>
-      <div style={{ flex: 1, minWidth: 200 }}>
-        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 6 }}>{label}</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {hasExisting && !newFileName && (
-            <span style={{ fontSize: 12, color: '#43a047', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span className="material-icons" style={{ fontSize: 14 }}>check_circle</span>
-              {existing.filename.split('/').pop()}
-            </span>
+    <div style={{ padding: '10px 0', borderBottom: '1px solid #f5f5f5' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div style={{ fontSize: 12, color: '#aaa', marginBottom: 6 }}>{label}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {hasExisting && !newFileName && (
+              <span style={{ fontSize: 12, color: '#43a047', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span className="material-icons" style={{ fontSize: 14 }}>check_circle</span>
+                {existing.filename.split('/').pop()}
+              </span>
+            )}
+            <label
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 10px', border: '1px dashed #ccc', borderRadius: 4, cursor: 'pointer', fontSize: 12, color: '#777' }}
+              onClick={() => inputRef.current?.click()}
+            >
+              <span className="material-icons" style={{ fontSize: 14 }}>upload_file</span>
+              {newFileName || (hasExisting ? 'Replace file…' : 'Choose file…')}
+            </label>
+            <input
+              ref={inputRef}
+              type="file"
+              accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/jpg,image/png"
+              style={{ display: 'none' }}
+              onChange={handleChange}
+            />
+          </div>
+          <div style={{ fontSize: 11, color: '#bbb', marginTop: 4 }}>
+            PDF, Word (.doc, .docx), JPG, PNG &nbsp;·&nbsp; Documents max {MAX_DOC_MB} MB &nbsp;·&nbsp; Images max {MAX_IMAGE_MB} MB
+          </div>
+          {sizeError && (
+            <div style={{ fontSize: 11, color: '#e53935', marginTop: 3, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <span className="material-icons" style={{ fontSize: 13 }}>error_outline</span>
+              {sizeError}
+            </div>
           )}
-          <label
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 10px', border: '1px dashed #ccc', borderRadius: 4, cursor: 'pointer', fontSize: 12, color: '#777' }}
-            onClick={() => inputRef.current?.click()}
-          >
-            <span className="material-icons" style={{ fontSize: 14 }}>upload_file</span>
-            {newFileName || (hasExisting ? 'Replace file…' : 'Choose PDF…')}
-          </label>
-          <input
-            ref={inputRef}
-            type="file"
-            accept="application/pdf"
-            style={{ display: 'none' }}
-            onChange={onFileChange}
-          />
         </div>
+        {hasExpiry && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 12, color: '#aaa', whiteSpace: 'nowrap' }}>Expiry:</span>
+            <input
+              type="date"
+              value={expiry || existing?.expiry || ''}
+              onChange={onExpiryChange}
+              className="form-control-box"
+              style={{ maxWidth: 150, padding: '5px 8px', fontSize: 12 }}
+            />
+          </div>
+        )}
       </div>
-      {hasExpiry && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 12, color: '#aaa', whiteSpace: 'nowrap' }}>Expiry:</span>
-          <input
-            type="date"
-            value={expiry || existing?.expiry || ''}
-            onChange={onExpiryChange}
-            className="form-control-box"
-            style={{ maxWidth: 150, padding: '5px 8px', fontSize: 12 }}
-          />
-        </div>
-      )}
     </div>
   )
 }

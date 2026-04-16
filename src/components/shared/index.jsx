@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 // ── StatusBadge ──────────────────────────────────────────────────────────────
 export function StatusBadge({ value }) {
@@ -33,10 +33,20 @@ export function PageHeader({ title, subtitle, color = 'primary', children }) {
   )
 }
 
+// ── File size limits ─────────────────────────────────────────────────────────
+const IMAGE_MIMETYPES = ['image/jpeg', 'image/jpg', 'image/png']
+const MAX_IMAGE_MB = 2
+const MAX_DOC_MB = 5
+
+function getFileSizeLimit(mimetype) {
+  return IMAGE_MIMETYPES.includes(mimetype) ? MAX_IMAGE_MB : MAX_DOC_MB
+}
+
 // ── FileUpload ────────────────────────────────────────────────────────────────
 export function FileUpload({ label, name, accept = 'application/pdf', required, showExpiry, onChange, expiryName, expiryValue, onExpiryChange }) {
   const inputRef = useRef()
   const expiryRef = useRef()
+  const [sizeError, setSizeError] = useState('')
 
   return (
     <div className="file-upload-wrap">
@@ -54,10 +64,31 @@ export function FileUpload({ label, name, accept = 'application/pdf', required, 
         onChange={(e) => {
           const file = e.target.files[0]
           const el = document.getElementById(`${name}-label`)
-          if (el) el.textContent = file ? file.name : 'Choose file…'
+          setSizeError('')
+          if (file) {
+            const limitMB = getFileSizeLimit(file.type)
+            if (file.size > limitMB * 1024 * 1024) {
+              setSizeError(`File too large — max ${limitMB} MB for this file type.`)
+              e.target.value = ''
+              if (el) el.textContent = 'Choose file…'
+              return
+            }
+            if (el) el.textContent = file.name
+          } else {
+            if (el) el.textContent = 'Choose file…'
+          }
           onChange && onChange(e)
         }}
       />
+      <div style={{ fontSize: 11, color: '#aaa', marginTop: 4 }}>
+        PDF, Word (.doc, .docx), JPG, PNG &nbsp;·&nbsp; Documents max {MAX_DOC_MB} MB &nbsp;·&nbsp; Images max {MAX_IMAGE_MB} MB
+      </div>
+      {sizeError && (
+        <div style={{ fontSize: 11, color: '#e53935', marginTop: 3, display: 'flex', alignItems: 'center', gap: 4 }}>
+          <span className="material-icons" style={{ fontSize: 13 }}>error_outline</span>
+          {sizeError}
+        </div>
+      )}
       {showExpiry && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
           <span style={{ fontSize: 12, color: '#aaa' }}>Expiry date:</span>
