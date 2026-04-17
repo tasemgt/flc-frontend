@@ -139,12 +139,21 @@ export default function TopNavbar({ title }) {
         {showAgency && (
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#999', marginLeft: 8, textTransform: 'uppercase' }}>
             |
-            {agencyLogoUrl && (
+            {agencyLogoUrl ? (
               <img
                 src={agencyLogoUrl}
                 alt={user.agency.name}
-                style={{ height: 22, width: 'auto', maxWidth: 80, objectFit: 'contain', borderRadius: 3, verticalAlign: 'middle' }}
+                style={{ height: 45, width: 45, objectFit: 'cover', borderRadius: '50%', verticalAlign: 'middle', flexShrink: 0 }}
               />
+            ) : (
+              <span style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                width: 45, height: 45, borderRadius: '50%',
+                background: '#222f3e', color: '#fff',
+                fontSize: 14, fontWeight: 600, flexShrink: 0, textTransform: 'uppercase',
+              }}>
+                {user.agency.name.charAt(0)}
+              </span>
             )}
             {user.agency.name}
           </span>
