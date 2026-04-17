@@ -32,3 +32,19 @@ export const useDeleteAgency = () =>
     mutationFn: (id) =>
       axiosClient.delete(`/agencies/${id}`).then((r) => r.data),
   })
+
+export const useUpdateAgencySettings = () =>
+  useMutation({
+    mutationFn: ({ id, formData }) =>
+      axiosClient.patch(`/agencies/${id}/settings`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }).then((r) => r.data),
+  })
+
+export const useMyLogoUrl = (enabled = true) =>
+  useQuery({
+    queryKey: ['agency-logo-url'],
+    queryFn: () => axiosClient.get('/agencies/my-logo-url').then((r) => r.data),
+    enabled,
+    staleTime: 23 * 60 * 60 * 1000, // re-fetch after 23 hours (before 24h signed URL expires)
+  })

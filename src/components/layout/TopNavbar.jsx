@@ -4,6 +4,8 @@ import useAuthStore from '../../store/authStore'
 import axiosClient from '../../api/axiosClient'
 import NotificationBell from '../shared/NotificationBell'
 
+const AGENCY_ROLES = ['director', 'nurse', 'caregiver']
+
 const CONSUMER_FORMS = [
   { label: 'All Consumer Forms', to: '/director/forms/consumer' },
   null,
@@ -124,18 +126,27 @@ function ProfileDropdown() {
 }
 
 export default function TopNavbar({ title }) {
-  const { user } = useAuthStore()
+  const { user, agencyLogoUrl } = useAuthStore()
   const isDirector = user?.role === 'director'
   const isAdmin = user?.role === 'admin'
   const isNurse = user?.role === 'nurse'
+  const showAgency = AGENCY_ROLES.includes(user?.role) && user?.agency?.name
 
   return (
     <nav className="top-navbar">
       <span className="top-navbar-title">
         {title}
-        {isDirector && user?.agency?.name && (
-          <span style={{ fontSize: 14, color: '#999', marginLeft: 8, textTransform: 'uppercase' }}>
-            | {user.agency.name}
+        {showAgency && (
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#999', marginLeft: 8, textTransform: 'uppercase' }}>
+            |
+            {agencyLogoUrl && (
+              <img
+                src={agencyLogoUrl}
+                alt={user.agency.name}
+                style={{ height: 22, width: 'auto', maxWidth: 80, objectFit: 'contain', borderRadius: 3, verticalAlign: 'middle' }}
+              />
+            )}
+            {user.agency.name}
           </span>
         )}
       </span>

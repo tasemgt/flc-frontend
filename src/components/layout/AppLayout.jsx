@@ -1,6 +1,9 @@
+import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import TopNavbar from './TopNavbar'
+import useAuthStore from '../../store/authStore'
+import { useMyLogoUrl } from '../../api/agencies.api'
 
 const routeTitles = {
   '/admin/dashboard': 'Dashboard',
@@ -56,6 +59,15 @@ const routeTitles = {
 
 export default function AppLayout() {
   const { pathname } = useLocation()
+  const { user, setAgencyLogoUrl } = useAuthStore()
+  const hasAgency = ['director', 'nurse', 'caregiver'].includes(user?.role)
+  const { data: logoData } = useMyLogoUrl(hasAgency)
+
+  useEffect(() => {
+    if (logoData?.logoUrl !== undefined) {
+      setAgencyLogoUrl(logoData.logoUrl)
+    }
+  }, [logoData])
   // Match static routes first, then fall back to dynamic patterns
   let title = routeTitles[pathname]
   if (!title) {
